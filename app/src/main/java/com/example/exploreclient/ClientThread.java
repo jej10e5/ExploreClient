@@ -23,7 +23,7 @@ public class ClientThread extends Thread {
         Socket sock = null;
         try {
             sock = new Socket(mServAddr, 9000);
-            DatagramSocket datagramSocket=new DatagramSocket(50006); //서버와 음성 통화를 위한 UDP소켓 설정
+            DatagramSocket datagramSocket=new DatagramSocket(50000); //서버와 음성 통화를 위한 UDP소켓 설정
             doPrintln(">> 서버와 연결 성공!");
             RecvThread recvThread = new RecvThread(sock.getInputStream());
             SendThread sendThread = new SendThread(sock.getOutputStream());
