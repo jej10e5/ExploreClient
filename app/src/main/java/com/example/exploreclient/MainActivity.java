@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
         if (auto_connect)
             mOnClick(mBtnConnect);
 
+        //꾹 눌렀을때 같은 데이터가 나오도록 RepeatListener을 사용
+       //initialinterval은 처음 터치한 후 반복이 실행되기까지의 대기시간을 의미함
+        //normalinterval은 반복 속도를 의미
         (mBtnForward).setOnTouchListener(new RepeatListener(3000,1, new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -233,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //음성인식 기본form
     public RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
@@ -294,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message, Toast.LENGTH_SHORT).show();
         }
 
+        //음성인식 결과
         @Override
         public void onResults(Bundle results) { // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줍니다.
             String R="오른쪽";
@@ -307,11 +312,12 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < matches.size() ; i++){
                 textView1.setText(matches.get(i));
             }
+            //문자열에 포함된 단어가 무엇인지 알아내기 위해 ArrayList로 선언된 matches를 String형으로 형변환
             speechtxt=matches.toString();
-            if(speechtxt.contains(R)){
+            if(speechtxt.contains(R)){//String형에 원하는 문자가 포함되어있는지 확인하기 위해 contain함수 사용
                     textView2.setText("Right");
                 if (SendThread.mHandler != null) {
-                    for(int cnt=0;cnt<45;cnt++) {
+                    for(int cnt=0;cnt<45;cnt++) { //방향을 트는 용도로 사용하기 위해 for문으로 delay제한을 걸어둠
                         Message msg = Message.obtain();
                         msg.what = SendThread.CMD_RIGHTBUTTON;
                         msg.obj = "R";
